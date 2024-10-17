@@ -15,7 +15,7 @@ sim_config["furniture"]["assembled_pos_threshold"] = [0.005, 0.005, 0.005]
 
 # Timeout for # environment steps for each furniture model.
 sim_config["scripted_timeout"] = {
-    "one_leg": 700,  # Increased from 600
+    "one_leg": 700,  # 700, Increased from 600
     "cabinet": 1500,
     "lamp": 1100,  # Increased from 1000
     "round_table": 1500,  # Increased from 1300
@@ -68,7 +68,7 @@ sim_config["robot"].update(
             0.05,
             0.05,
             0.05,
-            0.05,
+            # 0.05,
         ],  # Default arm friction.
         "gripper_frictions": [15.0, 15.0],  # Default gripper friction.
         "gripper_torque": 13,  # Default torque for gripper.

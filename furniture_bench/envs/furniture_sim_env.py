@@ -377,27 +377,30 @@ class FurnitureSimEnv(gym.Env):
                 self.franka_asset
             )
             if self.ctrl_mode == "osc":
-                franka_dof_props["driveMode"][:7].fill(gymapi.DOF_MODE_EFFORT)
-                franka_dof_props["stiffness"][:7].fill(0.0)
-                franka_dof_props["damping"][:7].fill(0.0)
-                franka_dof_props["friction"][:7] = sim_config["robot"]["arm_frictions"]
+                # changed by jh from 7 to 6
+                franka_dof_props["driveMode"][:6].fill(gymapi.DOF_MODE_EFFORT)
+                franka_dof_props["stiffness"][:6].fill(0.0)
+                franka_dof_props["damping"][:6].fill(0.0)
+                print('sim_config["robot"]["arm_frictions"]', sim_config["robot"]["arm_frictions"])
+                franka_dof_props["friction"][:6] = sim_config["robot"]["arm_frictions"]
             else:
-                franka_dof_props["driveMode"][:7].fill(gymapi.DOF_MODE_POS)
+                franka_dof_props["driveMode"][:6].fill(gymapi.DOF_MODE_POS)
                 # Kq_new = (
                 #     torch.Tensor([150.0, 120.0, 160.0, 100.0, 110.0, 100.0, 40.0]) * 8
                 # )
                 # Kqd_new = torch.Tensor([20.0, 20.0, 20.0, 20.0, 12.0, 12.0, 8.0]) * 8
                 # franka_dof_props["stiffness"][:7] = Kq_new
                 # franka_dof_props["damping"][:7] = Kqd_new
-                franka_dof_props["stiffness"][:7].fill(1000.0)
-                franka_dof_props["damping"][:7].fill(200.0)
+                franka_dof_props["stiffness"][:6].fill(1000.0)
+                franka_dof_props["damping"][:6].fill(200.0)
 
             # Grippers
-            franka_dof_props["driveMode"][7:].fill(gymapi.DOF_MODE_EFFORT)
-            franka_dof_props["stiffness"][7:].fill(0)
-            franka_dof_props["damping"][7:].fill(0)
-            franka_dof_props["friction"][7:] = sim_config["robot"]["gripper_frictions"]
-            franka_dof_props["upper"][7:] = self.max_gripper_width / 2
+            # changed by jh from 7 to 6
+            franka_dof_props["driveMode"][6:].fill(gymapi.DOF_MODE_EFFORT)
+            franka_dof_props["stiffness"][6:].fill(0)
+            franka_dof_props["damping"][6:].fill(0)
+            franka_dof_props["friction"][6:] = sim_config["robot"]["gripper_frictions"]
+            franka_dof_props["upper"][6:] = self.max_gripper_width / 2
 
             self.isaac_gym.set_actor_dof_properties(
                 env, franka_handle, franka_dof_props
@@ -405,10 +408,13 @@ class FurnitureSimEnv(gym.Env):
             # Set initial dof states
             franka_num_dofs = self.isaac_gym.get_asset_dof_count(self.franka_asset)
             self.default_dof_pos = np.zeros(franka_num_dofs, dtype=np.float32)
-            self.default_dof_pos[:7] = np.array(
+            # changed by jh from 7 to 6
+            print('config["robot"]["reset_joints"]', config["robot"]["reset_joints"])
+            self.default_dof_pos[:6] = np.array(
                 config["robot"]["reset_joints"], dtype=np.float32
             )
-            self.default_dof_pos[7:] = self.max_gripper_width / 2
+            # changed by jh from 7 to 6
+            self.default_dof_pos[6:] = self.max_gripper_width / 2
             default_dof_state = np.zeros(franka_num_dofs, gymapi.DofState.dtype)
             default_dof_state["pos"] = self.default_dof_pos
             self.isaac_gym.set_actor_dof_states(
@@ -643,22 +649,24 @@ class FurnitureSimEnv(gym.Env):
 
         _forces = self.isaac_gym.acquire_dof_force_tensor(self.sim)
         _forces = gymtorch.wrap_tensor(_forces)
-        self.forces = _forces.view(self.num_envs, 9)
+        # changed by jh from 9 to 8
+        self.forces = _forces.view(self.num_envs, 8)
 
         # Get DoF tensor
         _dof_states = self.isaac_gym.acquire_dof_state_tensor(self.sim)
         self.dof_states = gymtorch.wrap_tensor(
             _dof_states
         )  # (num_dofs, 2), 2 for pos and vel.
-        self.dof_pos = self.dof_states[:, 0].view(self.num_envs, 9)
-        self.dof_vel = self.dof_states[:, 1].view(self.num_envs, 9)
+        # changed by jh from 9 to 8
+        self.dof_pos = self.dof_states[:, 0].view(self.num_envs, 8)
+        self.dof_vel = self.dof_states[:, 1].view(self.num_envs, 8)
         # Get jacobian tensor
         # for fixed-base franka, tensor has shape (num envs, 10, 6, 9)
         _jacobian = self.isaac_gym.acquire_jacobian_tensor(self.sim, "franka")
         self.jacobian = gymtorch.wrap_tensor(_jacobian)
         # jacobian entries corresponding to franka hand
         self.jacobian_eef = self.jacobian[
-            :, self.franka_ee_index - 1, :, :7
+            :, self.franka_ee_index - 1, :, :6
         ]  # -1 due to finxed base link.
         # Prepare mass matrix tensor
         # For franka, tensor shape is (num_envs, 7 + 2, 7 + 2), 2 for grippers.
@@ -906,31 +914,32 @@ class FurnitureSimEnv(gym.Env):
                 ).t()  # OSC expect column major
                 state_dict["ee_pos"] = ee_pos[env_idx]
                 state_dict["ee_quat"] = ee_quat[env_idx]
-                state_dict["joint_positions"] = self.dof_pos[env_idx][:7]
-                state_dict["joint_velocities"] = self.dof_vel[env_idx][:7]
+                # changed by jh from 7 to 6
+                state_dict["joint_positions"] = self.dof_pos[env_idx][:6]
+                state_dict["joint_velocities"] = self.dof_vel[env_idx][:6]
                 state_dict["mass_matrix"] = self.mm[env_idx][
-                    :7, :7
+                    :6, :6 
                 ].t()  # OSC expect column major
                 state_dict["jacobian"] = self.jacobian_eef[
                     env_idx
                 ].t()  # OSC expect column major
                 state_dict["jacobian_diffik"] = self.jacobian_eef[env_idx]
                 if self.ctrl_mode == "osc":
-                    torque_action[env_idx, :7] = self.osc_ctrls[env_idx](state_dict)[
+                    torque_action[env_idx, :6] = self.osc_ctrls[env_idx](state_dict)[
                         "joint_torques"
                     ]
                 else:
-                    pos_action[env_idx, :7] = self.diffik_ctrls[env_idx](state_dict)[
+                    pos_action[env_idx, :6] = self.diffik_ctrls[env_idx](state_dict)[
                         "joint_positions"
                     ]
 
                 if grip_sep > 0:
-                    torque_action[env_idx, 7:9] = sim_config["robot"]["gripper_torque"]
+                    torque_action[env_idx, 6:8] = sim_config["robot"]["gripper_torque"]
                     # pos_action[env_idx, 7:9] = sim_config["robot"]["gripper_open"]
-                    pos_action[env_idx, 7:9] = self.max_gripper_width / 2
+                    pos_action[env_idx, 6:8] = self.max_gripper_width / 2
                 else:
-                    torque_action[env_idx, 7:9] = -sim_config["robot"]["gripper_torque"]
-                    pos_action[env_idx, 7:9] = 0.0
+                    torque_action[env_idx, 6:8] = -sim_config["robot"]["gripper_torque"]
+                    pos_action[env_idx, 6:8] = 0.0
 
             if self.ctrl_mode == "osc":
                 self.isaac_gym.set_dof_actuation_force_tensor(
@@ -1067,15 +1076,16 @@ class FurnitureSimEnv(gym.Env):
             )
 
     def _read_robot_state(self):
-        joint_positions = self.dof_pos[:, :7]
-        joint_velocities = self.dof_vel[:, :7]
+        # changed by jh from 7 to 6
+        joint_positions = self.dof_pos[:, :6]
+        joint_velocities = self.dof_vel[:, :6]
         joint_torques = self.forces
         ee_pos, ee_quat = self.get_ee_pose()
         for q in ee_quat:
             if q[3] < 0:
                 q *= -1
-        ee_pos_vel = self.rb_states[self.ee_idxs, 7:10]
-        ee_ori_vel = self.rb_states[self.ee_idxs, 10:]
+        ee_pos_vel = self.rb_states[self.ee_idxs, 6:9]
+        ee_ori_vel = self.rb_states[self.ee_idxs, 9:]
         gripper_width = self.gripper_width()
 
         robot_state_dict = {
@@ -1087,8 +1097,8 @@ class FurnitureSimEnv(gym.Env):
             "ee_pos_vel": ee_pos_vel,
             "ee_ori_vel": ee_ori_vel,
             "gripper_width": gripper_width,
-            "finger_joint_1": self.dof_pos[:, 7:8],
-            "finger_joint_2": self.dof_pos[:, 8:9],
+            "finger_joint_1": self.dof_pos[:, 6:7],
+            "finger_joint_2": self.dof_pos[:, 7:8],
         }
         # return {k: robot_state_dict[k] for k in self.robot_state_keys}
         return robot_state_dict
@@ -1148,7 +1158,8 @@ class FurnitureSimEnv(gym.Env):
         return hand_pos - base_pos, hand_quat
 
     def gripper_width(self):
-        return self.dof_pos[:, 7:8] + self.dof_pos[:, 8:9]
+        # changed by jh from 9 to 8
+        return self.dof_pos[:, 6:7] + self.dof_pos[:, 7:8]
 
     def _done(self) -> bool:
         dones = torch.zeros((self.num_envs, 1), dtype=torch.bool, device=self.device)
