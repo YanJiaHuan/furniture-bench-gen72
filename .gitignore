@@ -140,3 +140,4 @@ log
 checkpoints
 
 outputs/
+teleop_sim_demo/
