@@ -67,7 +67,7 @@ class DataCollector:
                 furniture=furniture,
                 max_env_steps=sim_config["scripted_timeout"][furniture]
                 if scripted
-                else 3000,
+                else 3000, #3000
                 headless=headless,
                 num_envs=1,  # Only support 1 for now.
                 manual_done=False if scripted else True,
@@ -290,13 +290,13 @@ class DataCollector:
         demo_path.mkdir(parents=True, exist_ok=True)
 
         # Color data paths.
-        self.color_names = ["color_image1", "color_image2", "color_image3"]
+        self.color_names = ["color_image1", "color_image2"] #, "color_image3"]
         self.color_video_names = []
         for name in self.color_names:
             self.color_video_names.append(demo_path / f"{data_name}_{name}.mp4")
 
         # Depth data paths.
-        self.depth_names = ["depth_image1", "depth_image2", "depth_image3"]
+        self.depth_names = [] #"depth_image1", "depth_image2", "depth_image3"]
         self.depth_paths = []
         for name in self.depth_names:
             self.depth_paths.append(demo_path / f"{data_name}_{name}")

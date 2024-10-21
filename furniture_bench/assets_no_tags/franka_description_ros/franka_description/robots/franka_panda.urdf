@@ -25,6 +25,9 @@
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://franka_description/robots/meshes_gen/base_link.dae" />
@@ -39,11 +42,17 @@
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://franka_description/robots/meshes_gen/base_link.STL" />
       </geometry>
     </collision>
+  </link>
+  <link
+    name="panda_link1">
   </link>
   <link
     name="panda_link1">
@@ -65,6 +74,9 @@
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://franka_description/robots/meshes_gen/Link1.dae" />
@@ -76,6 +88,9 @@
       </material>
     </visual>
     <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -123,6 +138,9 @@
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://franka_description/robots/meshes_gen/Link2.dae" />
@@ -134,6 +152,9 @@
       </material>
     </visual>
     <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -181,6 +202,9 @@
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://franka_description/robots/meshes_gen/Link3.dae" />
@@ -192,6 +216,9 @@
       </material>
     </visual>
     <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -239,6 +266,9 @@
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://franka_description/robots/meshes_gen/Link4.dae" />
@@ -250,6 +280,9 @@
       </material>
     </visual>
     <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -294,6 +327,9 @@
         izz="0.000274640088277484" />
     </inertial>
     <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -355,6 +391,9 @@
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://franka_description/robots/meshes_gen/Link6.dae" />
@@ -366,6 +405,9 @@
       </material>
     </visual>
     <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -451,119 +493,10 @@
       effort="5"
       velocity="3.926" />
   </joint>
-  <!-- <link name="panda_link8"/>
-  <joint name="panda_joint8" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0.107"/>
-    <parent link="panda_link7"/>
-    <child link="panda_link8"/>
-  </joint> -->
-  <!-- sub-link defining detailed meshes for collision with environment -->
-  <!-- Panda hand -->
-  <joint name="panda_hand_joint" type="fixed">
-    <parent link="panda_link7"/>
-    <child link="panda_hand"/>
-    <origin rpy="0 0 -0.785398163397" xyz="0 0 0.107"/>
-  </joint>
-  <link name="panda_hand">
-    <visual>
-      <geometry>
-        <mesh filename="package://franka_description/meshes/visual/hand.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://franka_description/meshes/collision/hand.stl"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="panda_leftfinger">
-    <visual>
-      <geometry>
-        <mesh filename="package://franka_description/meshes/visual/finger.dae"/>
-      </geometry>
-    </visual>
-    <!-- screw mount -->
-    <collision>
-      <origin rpy="0 0 0" xyz="0 18.5e-3 11e-3"/>
-      <geometry>
-        <box size="22e-3 15e-3 20e-3"/>
-      </geometry>
-    </collision>
-    <!-- cartriage sledge -->
-    <collision>
-      <origin rpy="0 0 0" xyz="0 6.8e-3 2.2e-3"/>
-      <geometry>
-        <box size="22e-3 8.8e-3 3.8e-3"/>
-      </geometry>
-    </collision>
-    <!-- diagonal finger -->
-    <collision>
-      <origin rpy="0.5235987755982988 0 0" xyz="0 15.9e-3 28.35e-3"/>
-      <geometry>
-        <box size="17.5e-3 7e-3 23.5e-3"/>
-      </geometry>
-    </collision>
-    <!-- rubber tip with which to grasp -->
-    <collision>
-      <origin rpy="0 0 0" xyz="0 7.58e-3 45.25e-3"/>
-      <geometry>
-        <box size="17.5e-3 15.2e-3 18.5e-3"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="panda_rightfinger">
-    <visual>
-      <origin rpy="0 0 3.141592653589793" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://franka_description/meshes/visual/finger.dae"/>
-      </geometry>
-    </visual>
-    <!-- screw mount -->
-    <collision>
-      <origin rpy="0 0 0" xyz="0 -18.5e-3 11e-3"/>
-      <geometry>
-        <box size="22e-3 15e-3 20e-3"/>
-      </geometry>
-    </collision>
-    <!-- cartriage sledge -->
-    <collision>
-      <origin rpy="0 0 0" xyz="0 -6.8e-3 2.2e-3"/>
-      <geometry>
-        <box size="22e-3 8.8e-3 3.8e-3"/>
-      </geometry>
-    </collision>
-    <!-- diagonal finger -->
-    <collision>
-      <origin rpy="-0.5235987755982988 0 0" xyz="0 -15.9e-3 28.35e-3"/>
-      <geometry>
-        <box size="17.5e-3 7e-3 23.5e-3"/>
-      </geometry>
-    </collision>
-    <!-- rubber tip with which to grasp -->
-    <collision>
-      <origin rpy="0 0 0" xyz="0 -7.58e-3 45.25e-3"/>
-      <geometry>
-        <box size="17.5e-3 15.2e-3 18.5e-3"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="panda_finger_joint1" type="prismatic">
-    <parent link="panda_hand"/>
-    <child link="panda_leftfinger"/>
-    <origin rpy="0 0 0" xyz="0 0 0.0584"/>
-    <axis xyz="0 1 0"/>
-    <limit effort="100" lower="0.0" upper="0.04" velocity="0.2"/>
-    <dynamics damping="0.3"/>
-  </joint>
-  <joint name="panda_finger_joint2" type="prismatic">
-    <parent link="panda_hand"/>
-    <child link="panda_rightfinger"/>
-    <origin rpy="0 0 0" xyz="0 0 0.0584"/>
-    <axis xyz="0 -1 0"/>
-    <limit effort="100" lower="0.0" upper="0.04" velocity="0.2"/>
-    <mimic joint="panda_finger_joint1"/>
-    <dynamics damping="0.3"/>
-  </joint>
+
+
+
+
   <joint name="k_ee" type="fixed">
     <parent link="panda_hand"/>
     <child link="k_ee_link"/>
@@ -571,4 +504,171 @@
   </joint>
   <link name="k_ee_link">
   </link>
+
+
+  <!-- Panda hand -->
+  <joint name="panda_hand_joint" type="fixed">
+    <parent link="panda_link7"/>
+    <child link="panda_hand"/>
+    <origin rpy="0 0 -0.785398163397" xyz="0 0 0.107"/>
+  </joint>
+
+
+  <link
+    name="panda_hand">
+    <inertial>
+      <origin
+        xyz="0.000590732710131745 -0.00212482055829597 0.0390711121564613"
+        rpy="0 0 0" />
+      <mass
+        value="0.410076712822003" />
+      <inertia
+        ixx="0.000490743093860451"
+        ixy="8.88694180287399E-06"
+        ixz="-4.40788336869861E-07"
+        iyy="0.000921185312665057"
+        iyz="3.47120316959879E-05"
+        izz="0.00085013675383108" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://franka_description/robots/Gripper/meshes/panda_hand.dae" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.749019607843137 0.749019607843137 0.749019607843137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://franka_description/robots/Gripper/meshes/panda_hand.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Left_Gripper">
+    <inertial>
+      <origin
+        xyz="-0.14078 0.018679 0.052776"
+        rpy="0 0 0" />
+      <mass
+        value="0.11401" />
+      <inertia
+        ixx="7.9791E-05"
+        ixy="-1.4328E-07"
+        ixz="-6.9009E-06"
+        iyy="9.604E-05"
+        iyz="1.6264E-08"
+        izz="3.962E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://franka_description/robots/Gripper/meshes/Left_Gripper.dae" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://franka_description/robots/Gripper/meshes/Left_Gripper.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LG"
+    type="prismatic">
+    <origin
+      xyz="0.071084 -0.02241 0.0801"
+      rpy="0 0 0" />
+    <parent
+      link="panda_hand" />
+    <child
+      link="Left_Gripper" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="0.055"
+      effort="10"
+      velocity="0.1" />
+  </joint>
+  <link
+    name="Right_Gripper">
+    <inertial>
+      <origin
+        xyz="-0.14059 0.0092217 0.053953"
+        rpy="0 0 0" />
+      <mass
+        value="0.11017" />
+      <inertia
+        ixx="7.7997E-05"
+        ixy="-1.4178E-07"
+        ixz="-6.9009E-06"
+        iyy="9.5588E-05"
+        iyz="9.38E-09"
+        izz="3.7415E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://franka_description/robots/Gripper/meshes/Right_Gripper.dae" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://franka_description/robots/Gripper/meshes/Right_Gripper.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RG"
+    type="prismatic">
+    <origin
+      xyz="-0.071084 0.01159 0.0801"
+      rpy="0 0 -3.1416" />
+    <parent
+      link="panda_hand" />
+    <child
+      link="Right_Gripper" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="0.055"
+      effort="10"
+      velocity="0.1" />
+  </joint>
+
 </robot>

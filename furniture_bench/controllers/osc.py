@@ -101,20 +101,24 @@ def osc_factory(real_robot=True, *args, **kwargs):
             if self.repeated_torques_counter != 1:
                 return {"joint_torques": self.prev_torques}
             # Get states.
-            joint_pos_current = state_dict["joint_positions"]
-            joint_vel_current = state_dict["joint_velocities"]
+            # changed by jh by adding [:6]
+            joint_pos_current = state_dict["joint_positions"][:6]
+            joint_vel_current = state_dict["joint_velocities"][:6]
 
-            mass_matrix = state_dict["mass_matrix"].reshape(7, 7).t()
-            mass_matrix[4, 4] += self.mass_matrix_offset_val[0]
-            mass_matrix[5, 5] += self.mass_matrix_offset_val[1]
-            mass_matrix[6, 6] += self.mass_matrix_offset_val[2]
+            # changed by jh from 7.7 to 6,6
+            mass_matrix = state_dict["mass_matrix"].reshape(6, 6).t()
+            mass_matrix[3, 3] += self.mass_matrix_offset_val[0]
+            mass_matrix[4, 4] += self.mass_matrix_offset_val[1]
+            mass_matrix[5, 5] += self.mass_matrix_offset_val[2]
 
             ee_pose = state_dict["ee_pose"].reshape(4, 4).t().contiguous()
             ee_pos, ee_quat = C.mat2pose(ee_pose)
             ee_pos = ee_pos.to(ee_pose.device)
             ee_quat = ee_quat.to(ee_pose.device)
+            # change by jh
+            print(f"Jacobian shape: {state_dict['jacobian'].shape}")
 
-            jacobian = state_dict["jacobian"].reshape(7, 6).t().contiguous()
+            jacobian = state_dict["jacobian"].reshape(6, 6).t().contiguous()
 
             ee_twist_current = jacobian @ joint_vel_current
             ee_pos_vel = ee_twist_current[:3]
