@@ -1,0 +1,5 @@
+10-18-2024
+python -m furniture_bench.scripts.collect_data --furniture one_leg --out-data-path our_data/teleop_sim_demo  --is-sim  --scripted
+
+
+python -m furniture_bench.scripts.collect_data --furniture one_leg --out-data-path keyboard_sim_demo --is-sim --input-device keyboard
