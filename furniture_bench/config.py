@@ -28,7 +28,7 @@ config: Dict[str, Any] = {
             -2.1383357,
             -0.09431414,
             2.49649072,
-            # 0.01921718,
+            0.01921718,
         ],
         "base_tag_xyz": (0.23 + 0.0715, 0, -ROBOT_HEIGHT),
         "tag_base_from_robot_base": get_mat(
