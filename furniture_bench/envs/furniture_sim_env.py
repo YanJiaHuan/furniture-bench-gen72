@@ -72,7 +72,7 @@ class FurnitureSimEnv(gym.Env):
         record: bool = False,
         max_env_steps: int = 3000,
         act_rot_repr: str = "quat",
-        action_type: str = "delta",  # "delta" or "pos"
+        action_type: str = "delta",  # "delta" or "pos" #增量｜绝对位置
         ctrl_mode: str = "osc",
         ee_laser: bool = False,
         **kwargs,
@@ -174,7 +174,8 @@ class FurnitureSimEnv(gym.Env):
         self.isaac_gym.refresh_actor_root_state_tensor(self.sim)
 
         self.init_ee_pos, self.init_ee_quat = self.get_ee_pose()
-
+        print('init_ee_pos:',self.init_ee_pos)
+        print('init_ee_quat:',self.init_ee_quat)
         gym.logger.set_level(gym.logger.INFO)
 
         self.record = record
@@ -1625,6 +1626,7 @@ class FurnitureSimEnv(gym.Env):
                 1,
             )  # Skill complete is always 1 when assembled.
         if not part1.pre_assemble_done:
+            print('not part1.pre_assemble_done:')
             goal_pos, goal_ori, gripper, skill_complete = part1.pre_assemble(
                 ee_pos,
                 ee_quat,
@@ -1634,7 +1636,11 @@ class FurnitureSimEnv(gym.Env):
                 self.sim_to_april_mat,
                 self.april_to_robot_mat,
             )
+            print('goal_pos:',goal_pos)
+            print('goal_ori:',goal_ori)
+            print('gripper:',gripper)
         elif not part2.pre_assemble_done:
+            print('not part2.pre_assemble_done:')
             goal_pos, goal_ori, gripper, skill_complete = part2.pre_assemble(
                 ee_pos,
                 ee_quat,
@@ -1644,7 +1650,11 @@ class FurnitureSimEnv(gym.Env):
                 self.sim_to_april_mat,
                 self.april_to_robot_mat,
             )
+            print('goal_pos:',goal_pos)
+            print('goal_ori:',goal_ori)
+            print('gripper:',gripper)
         else:
+            print('else:')
             goal_pos, goal_ori, gripper, skill_complete = self.furniture.parts[
                 part_idx2
             ].fsm_step(
@@ -1657,9 +1667,12 @@ class FurnitureSimEnv(gym.Env):
                 self.april_to_robot_mat,
                 self.furniture.parts[part_idx1].name,
             )
+            print('goal_pos:',goal_pos)
+            print('goal_ori:',goal_ori)
+            print('gripper:',gripper)
 
         delta_pos = goal_pos - ee_pos
-
+        print('delta_pos:',delta_pos)
         # Scale translational action.
         delta_pos_sign = delta_pos.sign()
         delta_pos = torch.abs(delta_pos) * 2

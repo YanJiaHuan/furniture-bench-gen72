@@ -535,12 +535,49 @@
           rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
+    <!-- block0 -->
     <collision>
       <origin
-        xyz="-0.145 0.0154 0.08"
+        xyz="-0.145 0.022 0.0386"
         rpy="0 0 0" />
       <geometry>
-        <box size="4e-2 3.5e-2 13.5e-2"/>
+        <box size="3.03e-2 2.58e-2 4.14e-2"/>
+      </geometry>
+    </collision>
+    <!-- block1 -->
+    <collision>
+      <origin
+        xyz="-0.145 0.022 0.08"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="3.03e-2 2.58e-2 4.14e-2"/>
+      </geometry>
+    </collision>
+    <!-- block2 -->
+    <collision>
+      <origin
+        xyz="-0.1399 0.022 0.109"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="2.26e-2 2.58e-2 2.09e-2"/>
+      </geometry>
+    </collision>
+    <!-- block3 -->
+    <collision>
+      <origin
+        xyz="-0.1356 0.022 0.125"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="1.43e-2 2.58e-2 1.60e-2"/>
+      </geometry>
+    </collision>
+    <!-- block4 -->
+    <collision>
+      <origin
+        xyz="-0.1314 0.022 0.142"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="4.66e-3 2.58e-2 1.70e-2"/>
       </geometry>
     </collision>
   </link>
@@ -592,12 +629,49 @@
           rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
+    <!-- block0 -->
     <collision>
       <origin
-        xyz="-0.145 0.0154 0.08"
+        xyz="-0.145 0.012 0.0386"
         rpy="0 0 0" />
       <geometry>
-        <box size="4e-2 3.5e-2 13.5e-2"/>
+        <box size="3.03e-2 2.58e-2 4.14e-2"/>
+      </geometry>
+    </collision>
+    <!-- block1 -->
+    <collision>
+      <origin
+        xyz="-0.145 0.012 0.08"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="3.03e-2 2.58e-2 4.14e-2"/>
+      </geometry>
+    </collision>
+    <!-- block2 -->
+    <collision>
+      <origin
+        xyz="-0.1399 0.012 0.109"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="2.26e-2 2.58e-2 2.09e-2"/>
+      </geometry>
+    </collision>
+    <!-- block3 -->
+    <collision>
+      <origin
+        xyz="-0.1356 0.012 0.125"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="1.43e-2 2.58e-2 1.60e-2"/>
+      </geometry>
+    </collision>
+    <!-- block4 -->
+    <collision>
+      <origin
+        xyz="-0.1314 0.012 0.142"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="4.66e-3 2.58e-2 1.70e-2"/>
       </geometry>
     </collision>
   </link>

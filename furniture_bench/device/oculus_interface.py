@@ -63,7 +63,7 @@ class OculusInterface(DeviceInterface):
         # swap and flip axes
         action_pos = action_pos[[2, 0, 1]]
         action_pos[2] = -action_pos[2]
-        action_pos *= 1.4  # Make action_pos larger so that the delta is not too small.
+        action_pos *= 5 #1.4  # Make action_pos larger so that the delta is not too small.
 
         rel_oculus_quat = T.quat_multiply(
             oculus_quat, T.quat_inverse(self.prev_oculus_quat)
