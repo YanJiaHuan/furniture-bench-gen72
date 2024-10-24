@@ -21,6 +21,7 @@ sim_config["scripted_timeout"] = {
     "round_table": 1500,  # Increased from 1300
     "drawer": 1_000,  # Increased from 1300
     "stool": 1_000,  # Increased from 1300
+    "pickplace": 1500, # added by jh
 }
 
 # Simulator options.
@@ -283,3 +284,10 @@ factory_hole_asset_options = default_asset_options()
 # factory_hole_asset_options.density = 1000.00
 factory_hole_asset_options.density = 500.00
 sim_config["asset"]["factory_hole"] = factory_hole_asset_options
+
+
+#---------------------------- added by jh ---------------------------------
+# Add cube asset configuration
+cube_asset_options = default_asset_options()
+cube_asset_options.density = 500.0  # Set density or any other properties you need for the cube
+sim_config["asset"]["cube"] = cube_asset_options

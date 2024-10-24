@@ -47,6 +47,7 @@ config: Dict[str, Any] = {
             "mug_rack": 0.07,
             "factory_peg_hole": 0.07,
             "factory_nut_bolt": 0.07,
+            "pickplace":0.065, # added by jh
         },
         "position_limits": [
             [0.3, 0.8],
@@ -107,6 +108,48 @@ config: Dict[str, Any] = {
             3: get_mat([0.03, 0.03, 0], [0, 0, 0]),
         },
         "reset_temps": [(0, 0.03, 0)],
+        #------------------------------- Added by jh -----------------------------------------------#
+        # add new tasks to resemble the furniture assembly tasks
+        #-------------------------------- 1. Pick and Place ----------------------------#
+        "pickplace": {
+            "tag_size": 0.0195,
+            "total_reward": 4.0,
+            "ee_pos": [
+                np.array([0.56077659, 0.04639731, 0.11256177], dtype=np.float32),  # Dummy for offset
+                np.array([0.45, -0.015, 0.01], dtype=np.float32),
+                np.array([0.52, 0.07, 0.035], dtype=np.float32),
+                np.array([0.42, 0.18, 0.015], dtype=np.float32),
+                np.array([0.65, 0.12, 0.08], dtype=np.float32),
+            ],
+            "ee_quat": [
+                np.array([-8.9071459e-01, -4.5411372e-01, 2.0201905e-02, 3.7367147e-04], dtype=np.float32),  # Dummy for offset
+                np.array([-0.70579994, -0.7077995, 0.00673244, 0.02865304], dtype=np.float32),
+                np.array([-0.71581334, -0.6981131, -0.00658566, 0.01435379], dtype=np.float32),
+                np.array([0.89031214, 0.00794221, -0.4523126, 0.05190935], dtype=np.float32),
+                np.array([-0.9996031, 0.00642258, 0.01763591, 0.0210082], dtype=np.float32),
+            ],
+            "grippers": [-1, 1, -1, 1, -1],
+            
+            "cube": {
+                "name": "cube",
+                "asset_file": "furniture/urdf/pickplace/cube/cube.urdf",
+                "ids": [176, 177, 178, 179],
+                "reset_pos": [np.array([0.0, 0.24, -0.015625])] * 5,
+                "reset_ori": [rot_mat(np.array([-np.pi / 2, 0, np.pi]), hom=True)] * 5,
+                "part_moved_skill_idx": 1,
+            },
+            "plate": {
+                "name": "plate",
+                "asset_file": "furniture/urdf/pickplace/cube/plate.urdf",
+                "ids": [180, 181, 182, 183],
+                "reset_pos": [np.array([0.1, 0.25, -0.01])] * 5,
+                "reset_ori": [rot_mat(np.array([0, np.pi / 2, 0]), hom=True)] * 5,
+                "part_moved_skill_idx": 2,
+            },
+        },
+        #-------------------------------------------------------------------------------#
+
+        #-------------------------------------------------------------------------------------------#
         "square_table": {
             "tag_size": 0.0195,
             "total_reward": 4.0,

@@ -1011,11 +1011,14 @@ class FurnitureSimEnv(gym.Env):
             # Return the poses in the simulator coordinate.
             for part_idx in range(len(self.furniture.parts)):
                 part = self.furniture.parts[part_idx]
+                print('part.name', part.name)
                 rb_idx = self.part_idxs[part.name]
+                print('rb_idx', rb_idx)
                 part_pose = self.rb_states[rb_idx, :7]
-                parts_poses[
-                    :, part_idx * self.pose_dim : (part_idx + 1) * self.pose_dim
-                ] = part_pose[:, : self.pose_dim]
+                print('part_pose shape', part_pose.shape)
+                # parts_poses[
+                #     :, part_idx * self.pose_dim : (part_idx + 1) * self.pose_dim
+                # ] = part_pose[:, : self.pose_dim]
 
             return parts_poses, founds
 
@@ -1576,9 +1579,9 @@ class FurnitureSimEnv(gym.Env):
             Tuple (action for the assembly task, skill complete mask)
         """
         assert self.num_envs == 1  # Only support one environment for now.
-        if self.furniture_name not in ["one_leg", "cabinet", "lamp", "round_table"]:
+        if self.furniture_name not in ["one_leg", "cabinet", "lamp", "round_table","pickplace"]: # added by jh
             raise NotImplementedError(
-                "[one_leg, cabinet, lamp, round_table] are supported for scripted agent"
+                "[one_leg, cabinet, lamp, round_table,pickplace] are supported for scripted agent"
             )
 
         if self.assemble_idx > len(self.furniture.should_be_assembled):
