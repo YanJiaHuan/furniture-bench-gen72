@@ -14,3 +14,10 @@ conda activate dppo
 
 python -m furniture_bench.scripts.collect_data --furniture one_leg --out-data-path our_data/pickplace_xz  --is-sim  
 
+
+
+10-25-2024
+git remote rm origin
+git remote add origin https://github.com/YanJiaHuan/furniture-bench-gen72.git
+git branch -M main
+git push -u origin main
